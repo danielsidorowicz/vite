@@ -47,12 +47,12 @@ body {
 }
 
 .jsonview {
-    width: 20%;
+    width: 15%;
     height: 100%;
     background-color: Lightgray;
 }
 
 .game {
-    width: 65%;
+    width: 70%;
     height: 100%;
 }

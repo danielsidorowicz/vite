@@ -9,12 +9,12 @@
     <script type="module" src="/index.js"></script>
 </head>
 
-<body>
+<body onload="siteloaded()">
     <div class="all" id="all">
         <div class="menuleft" id="menuleft">
             <div class="selectsize" id="selectsize">
                 <h2>size</h2>
-                <select name="size" id="size" class="size"></select>
+                <select name="size" id="size" class="size" onchange="changesize()"></select>
             </div>
             <div class="choosetype" id="choosetype">
                 <button class="walls typebutton" id="walls">Walls</button>
