@@ -1,12 +1,21 @@
 import hexagon from '../gfx/hexagon.png';
 
-export default class CustomDiv {
+let level = []
+let alreadyClicked = []
+let gameobj = {
+    level: level
+}
 
-    constructor(w) {
+class CustomDiv {
 
-        console.log(this)
+    constructor(w, id, x, z) {
+
+        // console.log(this)
 
         this.w = w
+        this.id = id
+        this.x = x
+        this.z = z
         //
         this.createDiv()
 
@@ -17,12 +26,51 @@ export default class CustomDiv {
         this.img = document.createElement('img')
         this.div.style.width = `${this.w}px`
         this.div.style.position = "absolute"
+        this.div.id = `${this.id}`
         this.img.src = hexagon
         this.img.width = 100
         this.div.append(this.img)
+        this.div.xPosition = this.x
+        this.div.zPosition = this.z
+        this.div.dirOut = 0
+        this.div.dirIn = 0
         //
         this.div.onclick = function () {
-            alert(`clicked`)
+            console.log(`clicked ${this.xPosition} ${this.zPosition}`)
+            if (alreadyClicked.includes(this.id)) {
+                for (let n = 0; n < alreadyClicked.length; n++) {
+                    if (level[n].id == this.id) {
+                        level.splice(n, 1)
+                    }
+                }
+                this.dirOut++
+                this.dirOut = this.dirOut % 6
+            } else {
+                alreadyClicked.push(this.id)
+            }
+            let clickedDivObject = {}
+            if (alreadyClicked.length == 1) {
+                clickedDivObject = {
+                    id: this.id,
+                    x: this.xPosition,
+                    z: this.zPosition,
+                    dirOut: this.dirOut,
+                    dirIn: "start",
+                    type: "placeholder"
+                }
+            } else {
+                clickedDivObject = {
+                    id: this.id,
+                    x: this.xPosition,
+                    z: this.zPosition,
+                    dirOut: this.dirOut,
+                    dirIn: this.dirOut + 3,
+                    type: "placeholder"
+                }
+            }
+            level.push(clickedDivObject)
+            console.log(gameobj);
+            document.getElementById('jsonview').innerText = JSON.stringify(gameobj, null, 2)
         }
     }
 
@@ -36,3 +84,5 @@ export default class CustomDiv {
     }
 
 }
+
+export { CustomDiv, gameobj }
