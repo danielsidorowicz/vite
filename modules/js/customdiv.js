@@ -1,11 +1,12 @@
+import hexagon from '../gfx/hexagon.png';
+
 export default class CustomDiv {
 
-    constructor(w, h, hexagon) {
+    constructor(w) {
 
         console.log(this)
 
         this.w = w
-        this.h = h
         //
         this.createDiv()
 
@@ -13,10 +14,12 @@ export default class CustomDiv {
 
     createDiv() {
         this.div = document.createElement("div")
+        this.img = document.createElement('img')
         this.div.style.width = `${this.w}px`
-        this.div.style.height = `${this.h}px`
         this.div.style.position = "absolute"
-        this.div.style.backgroundImage = this.hexagon
+        this.img.src = hexagon
+        this.img.width = 100
+        this.div.append(this.img)
         //
         this.div.onclick = function () {
             alert(`clicked`)

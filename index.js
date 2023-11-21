@@ -11,20 +11,24 @@ for (let i = 1; i < 9; i++) {
 }
 
 
-import hexagon from './modules/gfx/hexagon.png';
+
 
 
 import CustomDiv from "./modules/js/customdiv.js";
 
 let size = 5
-const customDiv = new CustomDiv(100, 100, hexagon)
 
-function changesize() {
+document.body.onload = function siteloaded() {
+    document.getElementById('game').innerHTML = ''
     let left = 50
     size = document.getElementById('size').value
     for (let i = 0; i < size; i++) {
         let top = 50
         for (let j = 0; j < size; j++) {
+            if (i % 2 != 0 && j == 0) {
+                top += 50
+            }
+            let customDiv = new CustomDiv(100)
             customDiv.setXY(left, top)
             console.log(customDiv);
             document.getElementById('game').append(customDiv.getRoot())
@@ -34,12 +38,18 @@ function changesize() {
     }
 }
 
-function siteloaded() {
+
+document.getElementById('size').onchange = function changesize() {
+    document.getElementById('game').innerHTML = ''
     let left = 50
     size = document.getElementById('size').value
     for (let i = 0; i < size; i++) {
         let top = 50
         for (let j = 0; j < size; j++) {
+            if (i % 2 != 0 && j == 0) {
+                top += 50
+            }
+            let customDiv = new CustomDiv(100)
             customDiv.setXY(left, top)
             console.log(customDiv);
             document.getElementById('game').append(customDiv.getRoot())
@@ -48,6 +58,8 @@ function siteloaded() {
         left += 100
     }
 }
+
+
 
 
 
