@@ -11,20 +11,34 @@
 
 <body>
     <div class="all" id="all">
-        <div class="menuleft" id="menuleft">
-            <div class="selectsize" id="selectsize">
-                <h2>size</h2>
-                <select name="size" id="size" class="size"></select>
+        <form action="/saveFile" method="post">
+            <div class="menuleft" id="menuleft">
+                <div class="selectsize" id="selectsize">
+                    <h2>size</h2>
+                    <select name="size" id="size" class="size"></select>
+                </div>
+                <div class="choosetype" id="choosetype">
+                    <button class="walls typebutton" id="wall" type="button">Wall</button>
+                    <button class="treasure typebutton" id="treasure" type="button">Treasure</button>
+                    <button class="light typebutton" id="light" type="button">Light</button>
+                    <p id="selectedPreview">Selected Type: Wall</p>
+                </div>
+                <div class="serverSelectors" id="serverSelectors">
+                    <h4>SERVER ACTIONS</h4>
+
+                    <button class="sendToServer typebutton" id="sendToServer" type="submit">Save JSON</button>
+
+                    <button class="loadFromFile typebutton" id="loadFromFile" type="button">Load JSON</button>
+                </div>
             </div>
-            <div class="choosetype" id="choosetype">
-                <button class="walls typebutton" id="walls">Walls</button>
-                <button class="treasure typebutton" id="treasure">Treasure</button>
-                <button class="light typebutton" id="light">Light</button>
+            <div class="jsonview" id="jsonview">
+                <p class="jsondata" id="jsondata"></p>
+                <input name="json" id="jsontext" hidden>
             </div>
-        </div>
-        <div class="jsonview" id="jsonview"></div>
-        <div class="game" id="game"></div>
+            <div class="game" id="game"></div>
+        </form>
     </div>
+
 </body>
 
 </html>

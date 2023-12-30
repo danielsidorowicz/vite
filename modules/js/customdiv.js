@@ -1,7 +1,29 @@
 import hexagon from '../gfx/hexagon.png';
+import hexagon0 from '../gfx/hexagon0.png';
+import hexagon1 from '../gfx/hexagon1.png';
+import hexagon2 from '../gfx/hexagon2.png';
+import hexagon3 from '../gfx/hexagon3.png';
+import hexagon4 from '../gfx/hexagon4.png';
+import hexagon5 from '../gfx/hexagon5.png';
 
+let selectedType = 'wall'
+
+document.getElementById('wall').addEventListener('click', function () {
+    selectedType = 'wall'
+    document.getElementById('selectedPreview').innerText = 'Selected Type: Wall'
+})
+document.getElementById('treasure').addEventListener('click', function () {
+    selectedType = 'treasure'
+    document.getElementById('selectedPreview').innerText = 'Selected Type: Treasure'
+})
+document.getElementById('light').addEventListener('click', function () {
+    selectedType = 'light'
+    document.getElementById('selectedPreview').innerText = 'Selected Type: Light'
+})
+
+let srcList = [hexagon0, hexagon1, hexagon2, hexagon3, hexagon4, hexagon5]
 let level = []
-let alreadyClicked = []
+let selectedHex = []
 let gameobj = {
     level: level
 }
@@ -36,41 +58,52 @@ class CustomDiv {
         this.div.dirIn = 0
         //
         this.div.onclick = function () {
-            console.log(`clicked ${this.xPosition} ${this.zPosition}`)
-            if (alreadyClicked.includes(this.id)) {
-                for (let n = 0; n < alreadyClicked.length; n++) {
-                    if (level[n].id == this.id) {
-                        level.splice(n, 1)
+            let HexId = this.id
+            let thisHex = this
+            if (selectedHex.includes(this.id)) {
+                level.find(function (element, index) {
+                    if (element.id == HexId) {
+                        gameobj.level[index].dirOut++
+                        gameobj.level[index].dirOut = gameobj.level[index].dirOut % 6
+                        gameobj.level[index].type = selectedType
+                        thisHex.children[0].src = srcList[gameobj.level[index].dirOut]
+                    }
+
+                })
+            }
+            else {
+                let clickedHexObject = {}
+                selectedHex.push(this.id)
+                if (selectedHex[0] == this.id) {
+                    clickedHexObject = {
+                        id: this.id,
+                        x: this.xPosition,
+                        z: this.zPosition,
+                        dirOut: this.dirOut,
+                        dirIn: "start",
+                        type: selectedType
+                    }
+                } else {
+                    let dirInGive = 0
+                    selectedHex.find(function (element, index) {
+                        if (element == HexId) {
+                            dirInGive = (gameobj.level[index - 1].dirOut + 3) % 6
+                        }
+                    })
+                    clickedHexObject = {
+                        id: this.id,
+                        x: this.xPosition,
+                        z: this.zPosition,
+                        dirOut: this.dirOut,
+                        dirIn: selectedHex[0] != this.id ? dirInGive : 'start',
+                        type: selectedType
                     }
                 }
-                this.dirOut++
-                this.dirOut = this.dirOut % 6
-            } else {
-                alreadyClicked.push(this.id)
+                thisHex.children[0].src = srcList[0]
+                level.push(clickedHexObject)
             }
-            let clickedDivObject = {}
-            if (alreadyClicked.length == 1) {
-                clickedDivObject = {
-                    id: this.id,
-                    x: this.xPosition,
-                    z: this.zPosition,
-                    dirOut: this.dirOut,
-                    dirIn: "start",
-                    type: "placeholder"
-                }
-            } else {
-                clickedDivObject = {
-                    id: this.id,
-                    x: this.xPosition,
-                    z: this.zPosition,
-                    dirOut: this.dirOut,
-                    dirIn: this.dirOut + 3,
-                    type: "placeholder"
-                }
-            }
-            level.push(clickedDivObject)
-            console.log(gameobj);
-            document.getElementById('jsonview').innerText = JSON.stringify(gameobj, null, 2)
+            document.getElementById('jsondata').innerText = JSON.stringify(gameobj, null, 2)
+            document.getElementById('jsontext').setAttribute('value', JSON.stringify(gameobj, null, 2))
         }
     }
 
