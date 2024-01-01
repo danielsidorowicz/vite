@@ -25,7 +25,7 @@ let srcList = [hexagon0, hexagon1, hexagon2, hexagon3, hexagon4, hexagon5]
 let level = []
 let selectedHex = []
 let gameobj = {
-    level: level
+    level: level,
 }
 
 class CustomDiv {
@@ -61,7 +61,7 @@ class CustomDiv {
             let HexId = this.id
             let thisHex = this
             if (selectedHex.includes(this.id)) {
-                level.find(function (element, index) {
+                gameobj.level.find(function (element, index) {
                     if (element.id == HexId) {
                         gameobj.level[index].dirOut++
                         gameobj.level[index].dirOut = gameobj.level[index].dirOut % 6
@@ -100,10 +100,9 @@ class CustomDiv {
                     }
                 }
                 thisHex.children[0].src = srcList[0]
-                level.push(clickedHexObject)
+                gameobj.level.push(clickedHexObject)
             }
             document.getElementById('jsondata').innerText = JSON.stringify(gameobj, null, 2)
-            document.getElementById('jsontext').setAttribute('value', JSON.stringify(gameobj, null, 2))
         }
     }
 
@@ -118,4 +117,71 @@ class CustomDiv {
 
 }
 
-export { CustomDiv, gameobj }
+class CustomDivLoad {
+
+    constructor(w, id, x, z, dirOut, dirIn, type, level) {
+
+        // console.log(this)
+        gameobj = {
+            level: level
+        }
+
+
+
+        this.w = w
+        this.id = id
+        this.x = x
+        this.z = z
+        this.dirOut = dirOut
+        this.dirIn = dirIn
+        this.type = type
+        //
+        this.createDiv()
+
+    }
+
+    createDiv() {
+        this.div = document.createElement("div")
+        this.img = document.createElement('img')
+        this.div.style.width = `${this.w}px`
+        this.div.style.position = "absolute"
+        this.div.id = `${this.id}`
+        this.img.src = srcList[this.dirOut]
+        this.img.width = 100
+        this.div.append(this.img)
+        this.div.xPosition = this.x
+        this.div.zPosition = this.z
+        this.div.dirOut = this.dirOut
+        this.div.dirIn = this.dirIn
+        this.div.type = this.type
+        selectedHex.push(this.id)
+
+        //
+        this.div.onclick = function () {
+            let HexId = this.id
+            let thisHex = this
+            gameobj.level.find(function (element, index) {
+                if (element.id == HexId) {
+                    gameobj.level[index].dirOut++
+                    gameobj.level[index].dirOut = gameobj.level[index].dirOut % 6
+                    gameobj.level[index].type = selectedType
+                    thisHex.children[0].src = srcList[gameobj.level[index].dirOut]
+                }
+
+            })
+            document.getElementById('jsondata').innerText = JSON.stringify(gameobj, null, 2)
+        }
+    }
+
+    getRoot() {
+        return this.div
+    }
+
+    setXY(x, y) {
+        this.div.style.left = `${x}px`
+        this.div.style.top = `${y}px`
+    }
+
+}
+
+export { CustomDiv, CustomDivLoad, gameobj }

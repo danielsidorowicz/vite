@@ -6,38 +6,46 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-  <script type="module" crossorigin src="/assets/index-34AWI19Z.js"></script>
+    <link rel="shortcut icon" href="#">
+  <script type="module" crossorigin src="/assets/index-6DREXZzT.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/modulepreload-polyfill-9p4a8sJU.js">
   <link rel="stylesheet" crossorigin href="/assets/index-NR92_lQb.css">
 </head>
 
 <body>
     <div class="all" id="all">
-        <form action="/saveFile" method="post">
-            <div class="menuleft" id="menuleft">
-                <div class="selectsize" id="selectsize">
-                    <h2>size</h2>
-                    <select name="size" id="size" class="size"></select>
-                </div>
-                <div class="choosetype" id="choosetype">
-                    <button class="walls typebutton" id="wall" type="button">Wall</button>
-                    <button class="treasure typebutton" id="treasure" type="button">Treasure</button>
-                    <button class="light typebutton" id="light" type="button">Light</button>
-                    <p id="selectedPreview">Selected Type: Wall</p>
-                </div>
-                <div class="serverSelectors" id="serverSelectors">
-                    <h4>SERVER ACTIONS</h4>
-
-                    <button class="sendToServer typebutton" id="sendToServer" type="submit">Save JSON</button>
-
-                    <button class="loadFromFile typebutton" id="loadFromFile" type="button">Load JSON</button>
-                </div>
+        <div class="menuleft" id="menuleft">
+            <div class="selectsize" id="selectsize">
+                <h2>size</h2>
+                <select name="size" id="size" class="size"></select>
             </div>
-            <div class="jsonview" id="jsonview">
-                <p class="jsondata" id="jsondata"></p>
-                <input name="json" id="jsontext" hidden>
+            <div class="choosetype" id="choosetype">
+                <button class="walls typebutton" id="wall" type="button">Wall</button>
+                <button class="treasure typebutton" id="treasure" type="button">Treasure</button>
+                <button class="light typebutton" id="light" type="button">Light</button>
+                <p id="selectedPreview">Selected Type: Wall</p>
             </div>
-            <div class="game" id="game"></div>
-        </form>
+            <div class="serverSelectors" id="serverSelectors">
+                <h4>SERVER ACTIONS</h4>
+
+                <button class="sendToServer typebutton" id="sendToServer" type="button">Save JSON</button>
+
+                <button class="loadFromFile typebutton" id="loadFromFile" type="button">Load JSON</button>
+            </div>
+            <!-- <div class="hexPreview" id="hexPreview">
+                <h4>HEX</h4>
+
+                <a href="/hex" class="oneHex" id="oneHex">Single Hexagon</a>
+            </div> -->
+        </div>
+        <div class="jsonview" id="jsonview">
+            <pre class="jsondata" id="jsondata">
+
+                </pre>
+            </p>
+        </div>
+        <div class="game" id="game"></div>
+
     </div>
 
 </body>

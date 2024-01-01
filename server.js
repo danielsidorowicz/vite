@@ -4,6 +4,8 @@ app.use(express.urlencoded({
     extended: true
 }));
 
+app.use(express.json());
+
 const fs = require('fs')
 
 const PORT = 3000
@@ -15,12 +17,24 @@ app.get('/', (req, res) => {
 })
 
 app.post('/saveFile', (req, res) => {
-    let json = req.body
-    let jsonParsed = JSON.parse(json.json)
-    fs.writeFile('gameSave.json', JSON.stringify(jsonParsed, null, 2), 'utf8', function () {
+    fs.writeFile('gameSave.json', JSON.stringify(req.body.json, null, 2), 'utf8', function () {
         console.log('done save')
     })
     res.redirect('/')
+})
+
+app.post('/loadSave', (req, res) => {
+    fs.readFile('gameSave.json', 'utf8', (err, data) => {
+        if (err) {
+            console.error(err);
+            return;
+        }
+        res.send(JSON.parse(data))
+    })
+})
+
+app.get('/hex', (req, res) => {
+    res.sendFile(__dirname + '/dist/hex.html')
 })
 
 app.listen(PORT, function () {
